@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        b,
+        i {
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        b {
+            font-size: 24px;
+            color: rgb(209, 97, 5);
+        }
+
+        i {
+            color: rgb(2, 132, 155);
+        }
+
+        .wrap {
+            width: 80vw;
+            min-width: 800px;
+            margin: 100px auto;
+        }
+
+        .wrap>ul {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrap>ul>li {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            width: 100%;
+            padding: 7px 0;
+            border-bottom: 1px solid #000;
+        }
+
+        .wrap>ul>li>.price {
+            display: flex;
+            width: 110px;
+            flex-wrap: wrap;
+        }
+
+        .wrap>ul>li>.count {
+            display: flex;
+        }
+
+        .wrap>ul>li>.count>.num {
+            width: 20px;
+            text-align: center;
+            border-bottom: 1px solid #000;
+            border-top: 1px solid #000;
+        }
+
+        .wrap>ul>li>.count>button {
+            cursor: pointer;
+        }
+
+        .wrap>ul>li>.del {
+            color: rgb(158, 150, 150);
+            cursor: pointer;
+        }
+
+        .wrap>ul>li>.check>img {
+            display: inline-block;
+            width: 100px;
+            border-radius: 7px;
+            margin-left: 5px;
+        }
+
+        .wrap>ul>li>h4 {
+            width: 40%;
+            padding-bottom: 50px;
+            line-height: 2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .wrap>.bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul>
+        </ul>
+        <div class="bar">
+
+        </div>
+    </div>
+    <script>
+        let oUl = document.querySelector(".wrap>ul"),
+            storage = window.localStorage,
+            oBar = document.querySelector(".wrap>.bar")
+
+        function ShoppingCart() {
+            let _this = this,
+                //添加商品，渲染
+                {
+                    every
+                } = Array.prototype
+            let products = JSON.parse(storage.getItem("products"))
+            let tmp = ``
+            if (products !== null) {
+                products.forEach((item, index) => {
+                    tmp += `<li  data-id="${item.id}"> <div class="check"><input type="checkbox"><img src="${item["img-src"]}" alt=""></div>
+                <h4>${item.title}</h4>
+                <div class="price">原价：<del>${item["del-price"]}</del>现价：<span>${item.price}元</span></div>
+                <div class="count">
+                    <button type="button" class="reduce">-</button>
+                    <div class="num">${item["num"]}</div>
+                    <button type="button" class="add">+</button>
+                </div>
+                <div class="del">删除</div></li>`
+                })
+                oUl.innerHTML = tmp
+           
+            //获取页面上需要用到的标签
+            let aCheck = document.querySelectorAll(".wrap>ul>li>.check>input"),
+                aReduce = document.querySelectorAll(".wrap>ul>li>.count>.reduce"),
+                aAdd = document.querySelectorAll(".wrap>ul>li>.count>.add"),
+                aNum = document.querySelectorAll(".wrap>ul>li>.count>.num"),
+                aDel = document.querySelectorAll(".wrap>ul>li>.del"),
+                aLi = document.querySelectorAll(".wrap>ul>li");
+
+            //减少选购数量
+            let num
+            aReduce.forEach((item, index) => {
+                item.addEventListener("click", function () {
+                    products.forEach((item,ind2)=>{
+                        if (item.id==aLi[index].dataset.id) {
+                           item.num>0?num=--item.num:num=0
+                            products.splice((products.indexOf(item)), 1, item)
+                            storage.setItem("products", JSON.stringify(products))
+                        }      
+                    })
+                    aNum.forEach((item, ind) => {
+                        aNum[index].innerHTML = num
+                    })
+                    _this.price()
+                })
+            })
+            //增加选购数量
+            aAdd.forEach((item, index) => {
+                item.addEventListener("click", function () {
+                    products.forEach((item,ind2)=>{
+                        if (item.id==aLi[index].dataset.id) {
+                            num=++item.num;  
+                            products.splice((products.indexOf(item)), 1, item)
+                            storage.setItem("products", JSON.stringify(products))
+                        }      
+                    })
+                    aNum.forEach((item, ind) => {
+                        aNum[index].innerHTML = num
+                    })
+                    _this.price()
+                })
+            })
+
+
+            
+            //删除商品  
+            aDel.forEach((item, index) => {
+                item.addEventListener("click", function () {
+                    aLi.forEach((item, ind, arr) => {
+                        arr[index].style.display = "none"
+                        //  console.log(arr[index].dataset.id);
+                    })
+                    products = products.filter((item, ind, arr) => {
+                        if (aLi[index].dataset.id != item.id) {
+                            return item
+                        }
+                    })
+                    storage.setItem("products", JSON.stringify(products))
+                    _this.price()
+                })
+            })
+
+            //选中商品
+            
+            products.forEach((item, index) => {
+                aCheck.forEach((item, ind, arr) => {
+                    if (products[index].check === "checked") {
+                        arr[index].checked = "checked"
+                    }
+                })
+            })
+
+            //取消选中商品
+            aCheck.forEach((item, index, arr) => {
+                item.addEventListener("click", function () {
+                    if (arr[index].checked === false) {
+                        products.forEach((item, ind) => {
+                            if (aLi[index].dataset.id == item.id) {
+                                item.check = ""
+                            }
+                        })
+
+                    } else {
+                        products.forEach((item, ind) => {
+                            if (aLi[index].dataset.id == item.id) {
+                               item.check = "checked"
+                            }
+                        })
+
+                    }
+
+                    _this.price()
+                    _this.checkAll()
+                })
+            })
+
+
+
+            //计算总价，总数
+            let totalPrice = [],
+                sum, count, arrCount = []
+            this.price = function () {
+                products.forEach((item, index) => {
+                    if (item.check === "checked") {
+                        arrCount.push(item.num)
+                        totalPrice.push(parseFloat(item.num * item.price).toFixed(2))
+                    }
+                })
+                if (totalPrice.length !== 0) {
+                    sum = totalPrice.reduce((pre, cur) => {
+                        let sum = Number(pre) + Number(cur)
+                        return parseFloat(sum).toFixed(2)
+                    })
+                    count = arrCount.reduce((pre, cur) => {
+                        return Number(pre) + Number(cur)
+                    })
+                    //console.log(totalPrice,sum);
+                    oBar.innerHTML = ` <div class="all">
+                <input type="checkbox">全选
+            </div>
+            <div class="calcu">总数：<span>${count}</span>总价：<b>${sum}</b><i>去结算</i></div>`
+                } else {
+                    oBar.innerHTML = ` <div class="all">
+                <input type="checkbox">全选
+            </div>
+            <div class="calcu">总数：<span>0</span>总价：<b>0</b><i>去结算</i></div>`
+                }
+
+                totalPrice = []
+                arrCount = []
+            }
+            this.price()
+
+            //全选
+            this.checkAll = function () {
+                let check = document.querySelector(".wrap>.bar>.all>input"),
+                    toggle = false
+                judge = every.call(aCheck, (item, index) => {
+                    if (item.checked === true) {
+                        return true
+                    }
+                })
+                if (judge === true) {
+                    toggle = true
+                    check.checked = "checked"
+                }
+
+                check.addEventListener("click", function () {
+                    if (toggle === true) {
+                        toggle = false
+                        aCheck.forEach((item, index, arr) => {
+                            arr[index].checked = ""
+                        })
+                    } else if (toggle === false) {
+                        toggle = true
+                        aCheck.forEach((item, index, arr) => {
+                            arr[index].checked = "checked"
+                        })
+                    }
+
+                })
+
+            }
+            this.checkAll()
+        }
+            //阻止图片默认拖拽效
+            function fn(ev) {
+                ev.preventDefault()
+            }
+            document.addEventListener("mousedown", fn)
+        }
+
+        //实例化
+        let gouwuche = new ShoppingCart()
+    </script>
+</body>
+
+</html>

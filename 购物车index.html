@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .hot {
+            width: 1200px;
+            min-width: 1200px;
+            box-sizing: border-box;
+            padding: 5px;
+            display: flex;
+            justify-content: space-around;
+            align-items: initial;
+            flex-wrap: wrap;
+            background-color: black;
+        }
+
+        .space {
+            margin-top: 5px;
+        }
+
+        .products {
+            display: flex;
+            width: 30%;
+            background-color: white;
+        }
+
+        .products>.imgbox {
+            position: relative;
+            width: 100%;
+        }
+
+        .products>.imgbox>img {
+            width: 160px;
+            height: 160px;
+            border-radius: 7px;
+            vertical-align: bottom;
+        }
+
+        .products>.imgbox>.time {
+            position: absolute;
+            width: 160px;
+            height: 40px;
+            background-color: rgb(230, 93, 93);
+            color: #fff;
+            border-radius: 7px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .products>.context {
+            position: relative;
+            width: 50%;
+            margin-right: 18px;
+        }
+
+        .products>.context>h4 {
+            width: 160px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .products>.context>.price {
+            color: rgb(235, 140, 16);
+        }
+
+        .products>.context>.price del {
+            margin-left: 15px;
+            font-size: 12px;
+            color: rgb(138, 132, 132);
+        }
+
+        .products>.context>button {
+            position: absolute;
+            border: 0;
+            background-color: rgb(231, 144, 4);
+            color: #fff;
+            padding: 5px 25px;
+            bottom: 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hot">
+        <div class="products" data-id="0">
+            <div class="imgbox">
+                <img src="./images/1.jpg" alt="">
+                <div class="residue"></div>
+            </div>
+            <div class="context">
+                <h4>吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳</h4>
+                <p></p>
+                <div class="price">¥160<del>¥200</del></div>
+                <button>立即抢购</button>
+            </div>
+        </div>
+        <div class="products" data-id="1">
+            <div class="imgbox">
+                <img src="./images/2.jpg" alt="">
+                <div class="residue"></div>
+            </div>
+            <div class="context">
+                <h4>依诺维绅REBEL书房双人布艺沙发床库特 小户型客厅阳台可折叠两用</h4>
+                <p></p>
+                <div class="price">¥6610<del>¥7000</del></div>
+                <button>立即抢购</button>
+            </div>
+        </div>
+        <div class="products" data-id="2">
+            <div class="imgbox">
+                <img src="./images/3.jpg" alt="">
+                <div class="residue"></div>
+            </div>
+            <div class="context">
+                <h4>欧式实木小梳妆台仿古白擦色做旧开放漆美式雕花卧室小户型化妆桌</h4>
+                <p></p>
+                <div class="price">¥2900<del>¥3000</del></div>
+                <button>立即抢购</button>
+            </div>
+        </div>
+        <div class="products space " data-id="3">
+            <div class="imgbox">
+                <img src="./images/4.jpg" alt="">
+                <div class="residue"></div>
+            </div>
+            <div class="context">
+                <h4>吱音阿婆橱桌现代中式实木折叠小户型餐边柜餐桌两用小户型家具</h4>
+                <p></p>
+                <div class="price">¥4699<del>¥5000</del></div>
+                <button>立即抢购</button>
+            </div>
+        </div>
+        <div class="products space" data-id="4">
+            <div class="imgbox">
+                <img src="./images/5.jpg" alt="">
+                <div class="residue"></div>
+            </div>
+            <div class="context">
+                <h4>奇居良品 客餐厅家居装饰品高仿真绢花假花兰花黄色跳舞兰花艺</h4>
+                <p></p>
+                <div class="price">¥4.97<del>¥10</del></div>
+                <button>立即抢购</button>
+            </div>
+        </div>
+        <div class="products space" data-id="5">
+            <div class="imgbox">
+                <img src="./images/6.jpg" alt="">
+                <div class="residue"></div>
+            </div>
+            <div class="context">
+                <h4>创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯</h4>
+                <p></p>
+                <div class="price">¥19.8<del>¥25</del></div>
+                <button>立即抢购</button>
+            </div>
+        </div>
+    </section>
+    <script>
+        let aNa = document.querySelectorAll(".products>.context>h4"),
+            aBtn = document.querySelectorAll(".products>.context>button"),
+            aPro = document.querySelectorAll(".products")
+        let data = {
+            "data": [{
+                    "id": 0,
+                    "title": "吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳",
+                    "price": "160",
+                    "del-price": "200",
+                    "num": 1,
+                    "img-src": "./images/1.jpg",
+                    "check": "checked"
+                },
+                {
+                    "id": 1,
+                    "title": "依诺维绅REBEL书房双人布艺沙发床库特 小户型客厅阳台可折叠两用",
+                    "price": "6610",
+                    "del-price": "7000",
+                    "num": 1,
+                    "img-src": "./images/2.jpg",
+                    "check": "checked"
+                },
+                {
+                    "id": 2,
+                    "title": "欧式实木小梳妆台仿古白擦色做旧开放漆美式雕花卧室小户型化妆桌",
+                    "price": "2900",
+                    "del-price": "3000",
+                    "num": 1,
+                    "img-src": "./images/3.jpg",
+                    "check": "checked"
+                },
+                {
+                    "id": 3,
+                    "title": "吱音阿婆橱桌现代中式实木折叠小户型餐边柜餐桌两用小户型家具",
+                    "price": "4699",
+                    "del-price": "5000",
+                    "num": 1,
+                    "img-src": "./images/4.jpg",
+                    "check": "checked"
+                },
+                {
+                    "id": 4,
+                    "title": "奇居良品 客餐厅家居装饰品高仿真绢花假花兰花黄色跳舞兰花艺",
+                    "price": "4.97",
+                    "del-price": "10",
+                    "num": 1,
+                    "img-src": "./images/5.jpg",
+                    "check": "checked"
+                },
+                {
+                    "id": 5,
+                    "title": "创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯",
+                    "price": "19.8",
+                    "del-price": "25",
+                    "num": 1,
+                    "img-src": "./images/6.jpg",
+                    "check": "checked"
+                }
+            ]
+        }
+        let arr = []
+
+        aBtn.forEach((item, index) => {
+
+            item.addEventListener("click", function (ev) {
+
+                if (JSON.parse(window.localStorage.getItem("products")) == null || JSON.parse(window
+                        .localStorage.getItem("products")).length == 0) {
+                    if (index === data.data[index].id) {
+                        arr.push(data.data[index])
+                    }
+                    console.log(arr);
+                } else {
+
+                    arr = JSON.parse(window.localStorage.getItem("products"))
+                    console.log(arr);
+
+                   // console.log('data.data[index]', data.data[index]);
+              
+                    let has = 0;
+                    has = arr.some((itemArr, ind) => {
+                        if (itemArr.id === data.data[index].id) {
+                            return true;
+                        }
+                    });
+                    //console.log(has);
+
+                    if (!has) {
+                        arr.push(data.data[index])
+                        console.log(arr);
+                    } else {
+
+                        arr.map((item)=>{
+                            if(item.id===index){
+                                item.num++;
+                            }
+                            return item;
+                        })
+                    }
+
+                }
+                products = JSON.stringify(arr)
+                window.localStorage.setItem("products", products)
+
+            })
+        })
+
+
+
+
+
+        //阻止图片默认拖拽效
+        function fn(ev) {
+            ev.preventDefault()
+        }
+        document.addEventListener("mousedown", fn)
+    </script>
+</body>
+
+</html>
